@@ -1,0 +1,27 @@
+#main {
+    display: flex;
+    flex-direction: row;
+}
+
+#form-box, #img-box {
+    height: 100%;
+    width: 50%;
+}
+
+#info {
+    display: flex;
+    flex-direction: column;
+}
+
+#photo-preview {
+    width: 15%;
+    height: 15%;
+}
+
+#hide-photo {
+    max-width: 100%;
+}
+
+#your-endorsement {
+    width: 100%;
+}

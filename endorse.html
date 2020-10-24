@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> I Endorse Mocha! </title>
+        <link rel="stylesheet" href="style.css"/>
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <article id="header">
+            <h1> Endorsements for Mocha! </h1>
+        </article>
+
+        <div id="main">
+            <div id="form-box">
+                <form action="#" onsubmit="handleSubmit()" id="info">
+                    <label for="name"> Your name: </label>
+                    <input type="text" id="name" value="John Smith">
+
+                    <label for="job-loc"> Job, location </label>
+                    <input type="text" id="job-loc">
+
+                    <textarea name="para" rows="8" width="250px"> Why are you endorsing Mocha for the House of Representatives?</textarea>
+
+                    <label for="your-photo"> Upload a photo of yourself: </label>
+                    <input type="file"  accept="image/*" name="image" id="you-photo" onchange="handlePhoto(event)">
+
+                    <div id="photo-preview">
+                        <img id="hide-photo" alt="uploaded-photo"/>
+                    </div>
+
+                    <input type="submit"/>
+                </form>
+            </div>
+            <div id="img-box">
+                <canvas id="your-endorsement"></canvas>
+            </div>
+        </div>
+    </body>
+</html>
