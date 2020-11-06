@@ -10,28 +10,48 @@ h1 {
 }
 
 .header {
-    padding: 15px;
-    padding-top: 60px;
-    padding-bottom: 40px;
+    padding: 60px 15px 40px;
     background-color: #682A8F;
     color: white;
 }
 
 .footer {
-    padding: 15px;
-    padding-top: 30px;
-    padding-bottom: 20px;
+    width: 100%;
+    padding: 30px 15px 20px;
     background-color: #47404c;
     color: white;
     position: center;
     bottom: 0;
-    width: 100%;
 }
 
-#canvas {
+#form {
+    padding-bottom: 50px;
+}
+
+#message {
+    min-height: 150px;
+}
+
+#gen-pictures {
+    align-items: center;
+}
+
+#fbCanvas {
+    width: 100%;
     max-width: 500px;
 
 }
+
+#twCanvas {
+    width: 100%;
+    max-width: 500px;
+}
+
+#icoCanvas {
+    width: 100%;
+    max-width: 200px;
+}
+
 
 #middle {
     padding-top: 40px;
@@ -45,11 +65,6 @@ h1 {
 #main {
     display: flex;
     flex-direction: row;
-}
-
-#form-box, #img-box {
-    height: 100%;
-    width: 50%;
 }
 
 #info {
@@ -70,13 +85,32 @@ h1 {
     width: 100%;
 }
 
+#endorsements {
+    padding-top: 100px;
+}
+
+.row {
+    padding: 20px;
+}
+.list-group {
+    padding: 20px 20px 50px;
+}
+
+
+input[type="file"] {
+    white-space: normal;
+    word-wrap: break-word;
+    width: 100%;
+    overflow: auto;
+}
+
+
 @font-face {
-    font-family: "Hanley Sans";
-    src: url("D62-Hanley-Sans.ttf");
+    font-family: 'Noto Sans JP', sans-serif;
 }
 
 @media (pointer: none), (pointer: coarse){
-    #canvas {
+    .canvas {
         max-width: 100%;
         padding:10px;
     }

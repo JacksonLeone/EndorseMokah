@@ -7,7 +7,6 @@ function handlePhoto(event) {
 function subForm() {
     console.log("Generating image");
     if (!generateInit()) {
-        console.log("Conditions not met. Ending generation.");
         return;
     }
     $.ajax({
@@ -15,7 +14,7 @@ function subForm() {
         type:'post',
         data:$("#myForm").serializeArray(),
         success: function() {
-            alert("Thank you for submitting the form!")
+            alert("Thank you for submitting the form! Changes to each field have been made.")
         },
         error: function() {
             alert("Error: One of the fields that you have entered are incorrect.")
@@ -23,44 +22,90 @@ function subForm() {
     });
 }
 
-let fbBlank, myForm, imageInput, canvas, ctx;
+let fbBlank, twBlank, icoBlank, myForm, imageInput, fbCanvas,twCanvas, icoCanvas, fbCtx, twCtx, icoCtx;
 
 function generateFBImage(firstName, lastName, message, jobTitle, img) {
-    canvas.height = fbBlank.height;
-    canvas.width = fbBlank.width;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(fbBlank, 0, 0);
+    fbCanvas.height = fbBlank.height;
+    fbCanvas.width = fbBlank.width;
+    fbCtx.clearRect(0, 0, fbCanvas.width, fbCanvas.height);
+    fbCtx.drawImage(fbBlank, 0, 0);
 
-    let nameFontSize = "32";
-    ctx.fillStyle = "black";
-    ctx.lineWidth = 500;
-    ctx.textAlign = "right";
-    ctx.textBaseline = 'top';
+    let nameFontSize = "30";
+    fbCtx.fillStyle = "black";
+    fbCtx.lineWidth = 500;
+    fbCtx.textAlign = "right";
+    // fbCtx.textBaseline = 'top';
 
     // Makes title with first name.
     const titleDefault = " Endorses Mokah Johnson for HD 117";
-    wrapText(firstName + titleDefault, 520, 36, 500, nameFontSize, "Hanley Sans");
+    wrapText(firstName + titleDefault, 520, 32, 450, nameFontSize, "Noto Sans JP", fbCtx);
 
     let messageFontSize = "40";
     if (message.length > 46) {
-        messageFontSize = (263 * (message.length ** (-0.469))).toString();
+        messageFontSize = (263 * (message.length ** (-0.469)) - 1).toString();
     }
-    console.log("Chars: " + message.length + ", Font Size: " + messageFontSize);
-    ctx.textAlign = "center";
-    wrapText('"' + message + '"' , 385, 135, 290, messageFontSize, "Hanley Sans");
+    fbCtx.textAlign = "center";
+    wrapText('"' + message + '"' , 385, 135, 250, messageFontSize, "Noto Sans JP", fbCtx);
 
-    ctx.textAlign = "left";
-    ctx.font = "15px Hanley Sans"
-    ctx.fillText(firstName + " " + lastName, 230, 455, 300);
+    fbCtx.textAlign = "left";
+    fbCtx.font = "15px Noto Sans JP"
+    fbCtx.fillText(firstName + " " + lastName, 230, 448, 300);
 
-    ctx.font = "12px Hanley Sans"
-    ctx.fillText(jobTitle, 230, 482, 300);
+    fbCtx.font = "12px Noto Sans JP"
+    fbCtx.fillText(jobTitle, 230, 478, 300);
 
-    if (img !== "") {
-        ctx.drawImage(img,28,142,195, 240);
+    if (img !== undefined) {
+        fbCtx.drawImage(img,28,162,195, 195);
     }
 }
 
+function generateTWImage(firstName, lastName, message, jobTitle, img) {
+    twCanvas.height = twBlank.height;
+    twCanvas.width = twBlank.width;
+    twCtx.clearRect(0, 0, twCanvas.width, twCanvas.height);
+    twCtx.drawImage(twBlank, 0, 0);
+
+    let nameFontSize = "28";
+    twCtx.fillStyle = "black";
+    twCtx.lineWidth = 500;
+    twCtx.textAlign = "right";
+
+    // Makes title with first name.
+    const titleDefault = " Endorses Mokah Johnson for HD 117";
+    wrapText(firstName + titleDefault, 870, 36, 1000, nameFontSize, "Noto Sans JP", twCtx);
+
+    let messageFontSize = "40";
+    if (message.length > 46) {
+        messageFontSize = (263 * (message.length ** (-0.469)) + 3).toString();
+    }
+    twCtx.textAlign = "center";
+    wrapText('"' + message + '"' , 585, 115, 500, messageFontSize, "Noto Sans JP", twCtx);
+
+    twCtx.textAlign = "left";
+    twCtx.font = "20px Noto Sans JP"
+    twCtx.fillText(firstName + " " + lastName, 320, 350, 700);
+
+    twCtx.font = "15px Noto Sans JP"
+    twCtx.fillText(jobTitle, 320, 388, 300);
+
+    if (img !== undefined) {
+        twCtx.drawImage(img, 48, 95, 220, 220);
+    }
+}
+
+function generateSocialIcon(img) {
+    icoCanvas.height = icoBlank.height;
+    icoCanvas.width = icoBlank.width;
+    icoCtx.clearRect(0, 0, icoCanvas.width, icoCanvas.height);
+    icoCtx.drawImage(icoBlank, 0, 0);
+
+    if (img !== undefined) {
+        icoCtx.drawImage(img, 0, 0, icoCanvas.width, icoCanvas.height);
+        const banner = document.getElementById("social-icon-banner");
+        icoCtx.drawImage(banner, 0, 640, icoCanvas.width, 320);
+
+    }
+}
 
 function generateCheck() {
     if (myForm.get("first-name") === "") {
@@ -99,7 +144,6 @@ function generateCheck() {
         alert("Endorsement message must exceed 30 characters.")
         return false;
     }
-    console.log(imageInput);
     if (imageInput === undefined) {
         alert("Image not inputted.")
         return false;
@@ -114,6 +158,8 @@ function generateInit() {
     }
 
     generateFBImage(myForm.get("first-name"), myForm.get("last-name"), myForm.get("message"), myForm.get("job-title"), imageInput);
+    generateTWImage(myForm.get("first-name"), myForm.get("last-name"), myForm.get("message"), myForm.get("job-title"), imageInput);
+    generateSocialIcon(imageInput);
     downloadsInit();
 
     return true;
@@ -121,13 +167,23 @@ function generateInit() {
 }
 
 function downloadsInit() {
-    const fbDownload = document.getElementById("download");
-    const fbdlbtn = document.getElementById("dl-btn");
-    fbdlbtn.style.display = "block";
-    fbDownload.href = canvas.toDataURL("image/png");
+    const fbDownload = document.getElementById("fbDownload");
+    const fbBtn = document.getElementById("fb-btn");
+    fbBtn.style.display = "block";
+    fbDownload.href = fbCanvas.toDataURL("image/png");
+
+    const twDownload = document.getElementById("twDownload");
+    const twBtn = document.getElementById("tw-btn");
+    twBtn.style.display = "block";
+    twDownload.href = twCanvas.toDataURL("image/png");
+
+    const icoDownload = document.getElementById("icoDownload");
+    const icoBtn = document.getElementById("ico-btn");
+    icoBtn.style.display = "block";
+    icoDownload.href = icoCanvas.toDataURL("image/png");
 }
 
-function wrapText(text, x, y, maxWidth, fontSize, fontFace){
+function wrapText(text, x, y, maxWidth, fontSize, fontFace, ctx){
     var words = text.split(' ');
     var line = '';
     var lineHeight=fontSize*1.286; // a good approx for 10-18px sizes
@@ -154,18 +210,40 @@ function wrapText(text, x, y, maxWidth, fontSize, fontFace){
 }
 
 window.addEventListener("load", function () {
-    canvas = document.getElementById("canvas");
-    ctx = canvas.getContext('2d');
+    //Facebook Image
+    fbCanvas = document.getElementById("fbCanvas");
+    fbCtx = fbCanvas.getContext('2d');
     fbBlank = document.getElementById("facebook-social-blank");
-    canvas.height = fbBlank.height;
-    canvas.width = fbBlank.width;
+    fbCanvas.height = fbBlank.height;
+    fbCanvas.width = fbBlank.width;
 
-    ctx.clearRect(0,0,canvas.width, canvas.height);
-    ctx.drawImage(fbBlank, 0, 0);
-    const defaultMSG = "Explain why you support Mokah Johnson for House District 117. " +
-        "What policies or positions resonate with you (i.e. healthcare, women's rights, campaign finance reform, etc.)? " +
-        "Make your points compelling so other voters want to support Mokah as well!"
-    generateFBImage("[insert name]", "[insert last name]", defaultMSG, "[insert job title]", "");
+    const fbExample = document.getElementById("facebook-social-example");
+    fbCtx.clearRect(0,0,fbCanvas.width, fbCanvas.height);
+    fbCtx.font = "Noto Sans JP";
+    fbCtx.drawImage(fbExample, 0, 0);
+
+    //Twitter Image
+    twCanvas = document.getElementById("twCanvas");
+    twCtx = twCanvas.getContext('2d');
+    twBlank = document.getElementById("twitter-social-blank");
+    twCanvas.height = twBlank.height;
+    twCanvas.width = twBlank.width;
+
+    const twExample = document.getElementById("twitter-social-example");
+    twCtx.clearRect(0,0,twCanvas.width, twCanvas.height);
+    twCtx.font = "Noto Sans JP";
+    twCtx.drawImage(twExample, 0, 0, twCanvas.width, twCanvas.height);
+
+    //Social Icon
+    icoCanvas = document.getElementById("icoCanvas");
+    icoCtx = icoCanvas.getContext('2d');
+    icoBlank = document.getElementById("social-icon-blank");
+    icoCanvas.width = icoCanvas.height = icoBlank.width;
+
+    const icoExample = document.getElementById("social-icon-example");
+    icoCtx.clearRect(0,0,icoCanvas.width, icoCanvas.height);
+    icoCtx.font = "Noto Sans JP";
+    icoCtx.drawImage(icoExample, 0, 0, icoCanvas.width, icoCanvas.height);
 });
 
 
