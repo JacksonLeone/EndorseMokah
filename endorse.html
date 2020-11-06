@@ -2,17 +2,20 @@
 <html>
     <head>
         <title> I Endorse Mocha! </title>
-        <link rel="stylesheet" href="style.css"/>
+        <link rel="stylesheet" href="main.css"/>
         <script src="script.js"></script>
+        <src = "https://code.jquery.com/jquery-3.5.1.js"
+        integrity = "sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+        crossorigin = "anonymous">
     </head>
-    <body>
+    <body id="body">
         <article id="header">
             <h1> Endorsements for Mocha! </h1>
         </article>
 
         <div id="main">
             <div id="form-box">
-                <form action="#" onsubmit="handleSubmit()" id="info">
+                <form action="#" onsubmit="subForm()" id="info">
                     <label for="name"> Your name: </label>
                     <input type="text" id="name" value="John Smith">
 
@@ -21,7 +24,7 @@
 
                     <textarea name="para" rows="8" width="250px"> Why are you endorsing Mocha for the House of Representatives?</textarea>
 
-                    <label for="your-photo"> Upload a photo of yourself: </label>
+                    <label for="you-photo"> Upload a photo of yourself: </label>
                     <input type="file"  accept="image/*" name="image" id="you-photo" onchange="handlePhoto(event)">
 
                     <div id="photo-preview">

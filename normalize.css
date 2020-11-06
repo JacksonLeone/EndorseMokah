@@ -1,3 +1,24 @@
+element.style {
+    margin: 0px;
+}
+
+body {
+    background-color: #ffffff;
+}
+
+body>header {
+    background-color: #682A8F;
+    color: #FFF;
+}
+
+h1 {
+    margin: 0;
+    font-weight: 700;
+    font-size: 3em;
+}
+
+
+
 #main {
     display: flex;
     flex-direction: row;

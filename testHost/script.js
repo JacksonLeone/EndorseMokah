@@ -61,7 +61,6 @@ function generateFBImage(firstName, lastName, message, jobTitle, img) {
     }
 }
 
-
 function generateCheck() {
     if (myForm.get("first-name") === "") {
         alert("First name not inputted.")
@@ -153,7 +152,7 @@ function wrapText(text, x, y, maxWidth, fontSize, fontFace){
     ctx.fillText(line, x, y);
 }
 
-window.addEventListener("load", function () {
+window.onload = function () {
     canvas = document.getElementById("canvas");
     ctx = canvas.getContext('2d');
     fbBlank = document.getElementById("facebook-social-blank");
@@ -166,7 +165,7 @@ window.addEventListener("load", function () {
         "What policies or positions resonate with you (i.e. healthcare, women's rights, campaign finance reform, etc.)? " +
         "Make your points compelling so other voters want to support Mokah as well!"
     generateFBImage("[insert name]", "[insert last name]", defaultMSG, "[insert job title]", "");
-});
+};
 
 
 

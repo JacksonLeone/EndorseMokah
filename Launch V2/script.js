@@ -61,7 +61,6 @@ function generateFBImage(firstName, lastName, message, jobTitle, img) {
     }
 }
 
-
 function generateCheck() {
     if (myForm.get("first-name") === "") {
         alert("First name not inputted.")
